@@ -29,4 +29,25 @@ function playGame() {
     alert("Міста закінчились!");
   }
 }
-// Output of game results - вивід результатів гри
+
+// 1. User input of a letter in a dialog box - Введення користувачем літери в діалогове вікно
+function playCityGame() {
+  userInput = prompt("Введіть літеру:");
+}
+// Check for correct letter input - Перевірка на правильність введення літери
+if (validateInput(userInput)) {
+  alert("Введіть, будь ласка лише одну букву.");
+}
+// 2. Remember the letter - Запам'ятати літеру
+var rememberLeter = userInput;
+// 3. Search for a city that starts with a given letter - Пошук міста, яке починається із заданої літери
+var matchesCity = findCity(rememberLeter);
+function findCity(letter) {
+  cities = ["Київ", "Вінниця", "Яготин", "Нова Каховка", "Авдіївка"];
+}
+// 4. Output of results - вивід результатів
+if (matchesCity) {
+  alert("Місто" + matchesCity + "Ви виграли!");
+} else {
+  alert("Міста закінчились, що починаються з цієї літери. Ви програли!");
+}
