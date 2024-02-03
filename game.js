@@ -31,11 +31,12 @@ function playGame() {
     for (var i = 0; i < cities.length; i++) {
       // цикл пробігається по всіх містах, змінна i - початкове значення
       var city = cities[i];
-      if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
-      }
-      return city;
       // перевіряє чи перша літера імені міста співпадає з переданою літерою
       // і перевіряє чи знаходиться місто в масиві
+      if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
+        cities.splice(cities.indexOf(city), 1); // Вилучити використане місто з масиву
+      }
+      return city;
     }
   }
   return null;
@@ -43,9 +44,8 @@ function playGame() {
 // Output of results - вивід результатів, функція означає чи виграв користувач або програв і виводь повідомлення
 function checkGameOver() {
   var outputElement = document.getElementById("output");
+  // перевіряє чи кількість неправильних спроб більше або дорівнює 3
   if (wrongAttempts >= 3 || cities.length == 0) {
-    // перевіряє чи кількість неправильних спроб більше або дорівнює 3
-    alert("Сайт: Я програв! Вітаю з перемогою!");
     outputElement.textContent = "Сайт: Я програв! Вітаю з перемогою!";
     return;
   } else {
