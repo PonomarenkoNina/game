@@ -14,7 +14,7 @@ function playGame() {
     var lastletter = userCity.charAt(userCity.length - 1); // отримаємо останню літеру введеного користувачем міста
     var nextCity = getNextCity(lastletter);
     // Перевірка чи існує наступне місто
-    if (nextCity) {
+    if (nextCity !== null) {
       outputElement.textContent = "Cайт: " + nextCity; // встановлює текстовий вміст і виводиться повідомлення
     } else {
       // ще - перевірка кількості неправильних спроб та закінчення міст
@@ -24,18 +24,19 @@ function playGame() {
 
     userCityInput.value = "";
     userCityInput.focus(); // для введення наступного міста
+    checkGameOver(); // перевірка на завершення гри після кожного шагу
   }
-  //  Search for a city that starts with a given letter - Пошук міста в пам'яті - викликаємо
-  // функцію наступного міста з параметром (остання літера)
-  function getNextCity(lastletter) {
-    for (var i = 0; i < cities.length; i++) {
-      // цикл пробігається по всіх містах, змінна i - початкове значення
-      var city = cities[i];
-      // перевіряє чи перша літера імені міста співпадає з переданою літерою
-      // і перевіряє чи знаходиться місто в масиві
-      if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
-        cities.splice(cities.indexOf(city), 1); // Вилучити використане місто з масиву
-      }
+}
+//  Search for a city that starts with a given letter - Пошук міста в пам'яті - викликаємо
+// функцію наступного міста з параметром (остання літера)
+function getNextCity(lastletter) {
+  for (var i = 0; i < cities.length; i++) {
+    // цикл пробігається по всіх містах, змінна i - початкове значення
+    var city = cities[i];
+    // перевіряє чи перша літера імені міста співпадає з переданою літерою
+    // і перевіряє чи знаходиться місто в масиві
+    if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
+      cities.splice(cities.indexOf(city), 1); // Вилучити використане місто з масиву
       return city;
     }
   }
