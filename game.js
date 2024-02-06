@@ -1,20 +1,25 @@
 // Creating an array for storing city names - Створення масиву для зберігання назв міст
 var cities = ["Київ", "Вінниця", "Яготин", "Нова Каховка", "Авдіївка"];
+console.log(cities);
 // Definition of variables - Визначення змінних
-var attempt;
 var wrongAttempts = 0; // Змінна для підрахунку помилок
+console.log(wrongAttempts);
 // Виклик функції та отримання міста, яке ввів користувач
 // запам'ятовує назву міста і на яку літеру закінчується, знаходить останню літеру зі строки
 function playGame() {
   var userCityInput = document.getElementById("cityInput"); // звертаємось через об'єкт до елементу cityInput - користувач вводить місто в інпут
+  console.log(userCityInput);
   var outputElement = document.getElementById("output"); // output - виводить текстові повідомлення
   var userCity = userCityInput.value.trim(); // userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли
   // Користувач вводить місто і йде перевірка
   if (userCity.length > 0) {
     var lastletter = userCity.charAt(userCity.length - 1); // отримаємо останню літеру введеного користувачем міста
+    console.log(lastletter);
     var nextCity = getNextCity(lastletter);
+    console.log("Значення nextCity: ", nextCity);
     // Перевірка чи існує наступне місто
     if (nextCity !== null) {
+      console.log("Наступне місто: " + nextCity);
       outputElement.textContent = "Cайт: " + nextCity; // встановлює текстовий вміст і виводиться повідомлення
     } else {
       // ще - перевірка кількості неправильних спроб та закінчення міст
@@ -33,10 +38,14 @@ function getNextCity(lastletter) {
   for (var i = 0; i < cities.length; i++) {
     // цикл пробігається по всіх містах, змінна i - початкове значення
     var city = cities[i];
+    console.log(
+      "Перевірка міста: " + city + " перевірка на літеру " + lastletter
+    );
     // перевіряє чи перша літера імені міста співпадає з переданою літерою
     // і перевіряє чи знаходиться місто в масиві
     if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
-      cities.splice(cities.indexOf(city), 1); // Вилучити використане місто з масиву
+      console.log("Вибране місто" + city);
+      cities.splice(i, 1); // Вилучити використане місто з масиву
       return city;
     }
   }
@@ -47,6 +56,12 @@ function checkGameOver() {
   var outputElement = document.getElementById("output");
   // перевіряє чи кількість неправильних спроб більше або дорівнює 3
   if (wrongAttempts >= 3 || cities.length == 0) {
+    console.log(
+      "Кількість неправильних спроб" +
+        wrongAttempts +
+        "чи міста закінчились: " +
+        cities.length
+    );
     outputElement.textContent = "Сайт: Я програв! Вітаю з перемогою!";
     return;
   } else {
