@@ -35,6 +35,7 @@ function playGame() {
 //  Search for a city that starts with a given letter - Пошук міста в пам'яті - викликаємо
 // функцію наступного міста з параметром (остання літера)
 function getNextCity(lastletter) {
+  var cityFound = false; // змінна для визначення, чі було знайдене місто
   for (var i = 0; i < cities.length; i++) {
     // цикл пробігається по всіх містах, змінна i - початкове значення
     var city = cities[i];
@@ -44,10 +45,14 @@ function getNextCity(lastletter) {
     // перевіряє чи перша літера імені міста співпадає з переданою літерою
     // і перевіряє чи знаходиться місто в масиві
     if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
-      console.log("Вибране місто" + city);
+      console.log("Знайдено місто, що починається з потрібної літери:", city);
       cities.splice(i, 1); // Вилучити використане місто з масиву
+      cityFound = true;
       return city;
     }
+  }
+  if (cityFound) {
+    console.log("Міста з такою літерою не знайденою");
   }
   return null;
 }
@@ -57,14 +62,20 @@ function checkGameOver() {
   // перевіряє чи кількість неправильних спроб більше або дорівнює 3
   if (wrongAttempts >= 3 || cities.length == 0) {
     console.log(
-      "Кількість неправильних спроб" +
+      "Гра закінчена: кількість неправильних спроб " +
         wrongAttempts +
-        "чи міста закінчились: " +
+        " чи міста закінчились: " +
         cities.length
     );
     outputElement.textContent = "Сайт: Я програв! Вітаю з перемогою!";
     return;
   } else {
+    console.log(
+      "Продовжуємо гру: неправильних спроб:",
+      wrongAttempts,
+      " міста залишились:",
+      cities.length
+    );
     outputElement.textContent = "Сайт: Неправильно. Спробуй ще!";
   }
 }
