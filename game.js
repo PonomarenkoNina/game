@@ -35,7 +35,6 @@ function playGame() {
 //  Search for a city that starts with a given letter - Пошук міста в пам'яті - викликаємо
 // функцію наступного міста з параметром (остання літера)
 function getNextCity(lastletter) {
-  var cityFound = false; // змінна для визначення, чі було знайдене місто
   for (var i = 0; i < cities.length; i++) {
     // цикл пробігається по всіх містах, змінна i - початкове значення
     var city = cities[i];
@@ -47,12 +46,8 @@ function getNextCity(lastletter) {
     if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
       console.log("Знайдено місто, що починається з потрібної літери:", city);
       cities.splice(i, 1); // Вилучити використане місто з масиву
-      cityFound = true;
       return city;
     }
-  }
-  if (cityFound) {
-    console.log("Міста з такою літерою не знайденою");
   }
   return null;
 }
