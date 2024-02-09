@@ -46,6 +46,7 @@ function getNextCity(lastletter) {
     if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
       console.log("Знайдено місто, що починається з потрібної літери:", city);
       cities.splice(i, 1); // Вилучити використане місто з масиву
+      console.log("Масив міст після вилучення міста: ", cities);
       return city;
     }
   }
