@@ -8,7 +8,7 @@ console.log(wrongAttempts);
 // запам'ятовує назву міста і на яку літеру закінчується, знаходить останню літеру зі строки
 function playGame() {
   var userCityInput = document.getElementById("cityInput"); // звертаємось через об'єкт до елементу cityInput - користувач вводить місто в інпут
-  console.log(userCityInput);
+  console.log("Введенe користувачем місто: ", userCityInput);
   var outputElement = document.getElementById("output"); // output - виводить текстові повідомлення
   var userCity = userCityInput.value.trim(); // userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли
   // Користувач вводить місто і йде перевірка
