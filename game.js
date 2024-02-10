@@ -8,9 +8,10 @@ console.log(wrongAttempts);
 // запам'ятовує назву міста і на яку літеру закінчується, знаходить останню літеру зі строки
 function playGame() {
   var userCityInput = document.getElementById("cityInput"); // звертаємось через об'єкт до елементу cityInput - користувач вводить місто в інпут
-  console.log("Введенe користувачем місто: ", userCityInput);
   var outputElement = document.getElementById("output"); // output - виводить текстові повідомлення
-  var userCity = userCityInput.value.trim(); // userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли
+  var userCity = userCityInput.value.trim().toUpperCase(); // userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли
+  // переводить текст у верхній  регістр
+  console.log("Введенe користувачем місто: ", userCity);
   // Користувач вводить місто і йде перевірка
   if (userCity.length > 0) {
     var lastletter = userCity.charAt(userCity.length - 1); // отримаємо останню літеру введеного користувачем міста
@@ -24,9 +25,8 @@ function playGame() {
     } else {
       // ще - перевірка кількості неправильних спроб та закінчення міст
       wrongAttempts++; // We increase the number of attempts by 1 - Кількість спроб збільшуємо на 1
-      outputElement.textContent = "Будь ласка, введіть назву міста.";
+      outputElement.textContent = "Сайт: Будь ласка, спробуй ще!";
     }
-
     userCityInput.value = "";
     userCityInput.focus(); // для введення наступного міста
     checkGameOver(); // перевірка на завершення гри після кожного шагу
@@ -72,6 +72,5 @@ function checkGameOver() {
       " міста залишились:",
       cities.length
     );
-    outputElement.textContent = "Сайт: Неправильно. Спробуй ще!";
   }
 }
