@@ -13,20 +13,27 @@ function playGame() {
   // переводить текст у верхній  регістр
   console.log("Введенe користувачем місто: ", userCity);
   // Користувач вводить місто і йде перевірка
+
   if (userCity.length > 0) {
     var lastletter = userCity.charAt(userCity.length - 1); // отримаємо останню літеру введеного користувачем міста
     console.log(lastletter);
     var nextCity = getNextCity(lastletter);
     console.log("Значення nextCity: ", nextCity);
     // Перевірка чи існує наступне місто
+
     if (nextCity !== null) {
       console.log("Наступне місто: " + nextCity);
       outputElement.textContent = "Cайт: " + nextCity; // встановлює текстовий вміст і виводиться повідомлення
+      var i = cities.indexOf(nextCity);
+      if (i !== -1) {
+        cities.splice(i, 1); // видалення міста, яке ввів користувач правильно
+      }
     } else {
       // ще - перевірка кількості неправильних спроб та закінчення міст
+      outputElement.textContent = "Неправильно, будь ласка, спробуй ще!";
       wrongAttempts++; // We increase the number of attempts by 1 - Кількість спроб збільшуємо на 1
-      outputElement.textContent = "Сайт: Будь ласка, спробуй ще!";
     }
+
     userCityInput.value = "";
     userCityInput.focus(); // для введення наступного міста
     checkGameOver(); // перевірка на завершення гри після кожного шагу
@@ -43,6 +50,7 @@ function getNextCity(lastletter) {
     );
     // перевіряє чи перша літера імені міста співпадає з переданою літерою
     // і перевіряє чи знаходиться місто в масиві
+
     if (city.charAt(0) == lastletter && cities.indexOf(city) !== -1) {
       console.log("Знайдено місто, що починається з потрібної літери:", city);
       cities.splice(i, 1); // Вилучити використане місто з масиву
@@ -56,6 +64,7 @@ function getNextCity(lastletter) {
 function checkGameOver() {
   var outputElement = document.getElementById("output");
   // перевіряє чи кількість неправильних спроб більше або дорівнює 3
+
   if (wrongAttempts >= 3 || cities.length == 0) {
     console.log(
       "Гра закінчена: кількість неправильних спроб " +
