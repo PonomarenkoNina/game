@@ -35,8 +35,7 @@ function playGame() {
       console.log("Наступне місто: " + nextCity);
       outputElement.textContent = "Наступне місто: " + nextCity; // встановлює текстовий вміст і виводиться повідомлення
     } else {
-      outputElement.textContent = "Неправильно, будь ласка, спробуй ще!";
-      wrongAttempts++; // We increase the number of attempts by 1 - Кількість спроб збільшуємо на 1
+      outputElement.textContent = "Спробуй ще раз. Ви програли!";
     }
     userCityInput.value = ""; // Очищення поля вводу
     userCityInput.focus(); // перенаправлення фокусу для введення наступного міста
