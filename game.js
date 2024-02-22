@@ -36,7 +36,7 @@ function playGame() {
       console.log("Наступне місто: " + nextCity);
       outputElement.textContent = "Наступне місто: " + nextCity; // встановлює текстовий вміст і виводиться повідомлення
     } else {
-      outputElement.textContent = "Такого міста не має в масиві. Ви програли!";
+      outputElement.textContent = "Такого міста не має в масиві. Спробуй ще!";
       wrongAttempts = 0; // Скидання лічильника неправильних спроб у випадку програшу
     }
     userCityInput.value = ""; // Очищення поля вводу
