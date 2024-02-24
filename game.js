@@ -9,6 +9,12 @@ function playGame() {
   var outputElement = document.getElementById("output"); //output - виводить текстові повідомлення
   var userCity = userCityInput.value.trim().toUpperCase(); //userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли, переводить текст у верхній  регістр
 
+  if (userCity.length === 0) {
+    //перевірка, чи введено щось користувачем
+    outputElement.textContent = "Ви не ввели місто!";
+    return;
+  }
+
   if (userCity.length > 0) {
     //користувач вводить місто і йде перевірка, чи введене користувачем місто збігається з містом у масиві
     console.log("Введене користувачем місто: ", userCity);
@@ -25,19 +31,25 @@ function playGame() {
       wrongAttempts++; //збільшення кількості неправильних спроб
     }
 
-    var lastletter = userCity.charAt(userCity.length - 1); //отримаємо останню літеру введеного користувачем міста
-    console.log(lastletter);
-    var nextCity = getNextCity(lastletter); //пошук наступного міста за останньою літерою
-    console.log("Значення nextCity: ", nextCity);
+    if (cities.includes(userCity)) {
+      //перевіркаб чи введене користувачем місто правильне
+      var lastletter = userCity.charAt(userCity.length - 1); //отримаємо останню літеру введеного користувачем міста
+      console.log(lastletter);
+      var nextCity = getNextCity(lastletter); //пошук наступного міста за останньою літерою
+      console.log("Значення nextCity: ", nextCity);
 
-    if (nextCity !== null) {
-      //перевіряємо чи існує наступне місто - чи nextCity не дорівнює null
-      console.log("Наступне місто: " + nextCity);
-      outputElement.textContent = "Наступне місто: " + nextCity; //встановлює текстовий вміст і виводиться повідомлення
+      if (nextCity !== null) {
+        //перевіряємо чи існує наступне місто - чи nextCity не дорівнює null
+        console.log("Наступне місто: " + nextCity);
+        outputElement.textContent = "Наступне місто: " + nextCity; //встановлює текстовий вміст і виводиться повідомлення
+      } else {
+        //ще, якщо дорівнює null, то місто не знайдено і гра завершується
+        outputElement.textContent = "Вітаю, ви виграли!";
+        wrongAttempts = 0; //скидання лічильника неправильних спроб у випадку програшу
+      }
     } else {
-      //ще, якщо дорівнює null, то місто не знайдено і гра завершується
-      outputElement.textContent = "Вітаю, ви виграли!";
-      wrongAttempts = 0; //скидання лічильника неправильних спроб у випадку програшу
+      //якщо введене місто не вірне
+      wrongAttempts++; //збільшення кількості неправильних спроб
     }
 
     userCityInput.value = ""; //очищення поля вводу
