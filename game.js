@@ -2,6 +2,7 @@ var cities = ["Київ", "Вінниця", "Яготин", "Нова Кахов
 console.log(cities);
 var wrongAttempts = 0; //змінна для підрахунку помилок
 console.log(wrongAttempts);
+var computerLost = false; //вказує на те, чи програв комп'ютер
 
 function playGame() {
   //початок гри (виклик функції та отримання міста, яке ввів користувач, запам'ятовує назву міста і на яку літеру закінчується, знаходить останню літеру зі строки)
@@ -11,6 +12,7 @@ function playGame() {
 
   if (userCity.length === 0) {
     //перевірка, чи введено щось користувачем
+    console.log("Користувач не ввів місто.");
     outputElement.textContent = "Ви не ввели місто!";
     return;
   }
@@ -25,17 +27,10 @@ function playGame() {
       //якщо місто знайдено в масиві, то
       cities.splice(i, 1); //вилучаємо місто з масиву
       console.log("Місто видалено з масиву. Новий масив міст:", cities);
-    } else {
-      //якщо ні
-      console.log("Місто не знайдено в масиві.");
-      wrongAttempts++; //збільшення кількості неправильних спроб
-    }
 
-    if (cities.includes(userCity)) {
-      //перевіркаб чи введене користувачем місто правильне
-      var lastletter = userCity.charAt(userCity.length - 1); //отримаємо останню літеру введеного користувачем міста
-      console.log(lastletter);
-      var nextCity = getNextCity(lastletter); //пошук наступного міста за останньою літерою
+      var lastLetter = userCity.charAt(userCity.length - 1); //отримаємо останню літеру введеного користувачем міста
+      console.log(lastLetter);
+      var nextCity = getNextCity(lastLetter); //пошук наступного міста за останньою літерою
       console.log("Значення nextCity: ", nextCity);
 
       if (nextCity !== null) {
@@ -43,19 +38,36 @@ function playGame() {
         console.log("Наступне місто: " + nextCity);
         outputElement.textContent = "Наступне місто: " + nextCity; //встановлює текстовий вміст і виводиться повідомлення
       } else {
+        console.log("Користувач виграв!");
         //ще, якщо дорівнює null, то місто не знайдено і гра завершується
-        outputElement.textContent = "Вітаю, ви виграли!";
-        wrongAttempts = 0; //скидання лічильника неправильних спроб у випадку програшу
+        outputElement.textContent = "Ви виграли!";
+        wrongAttempts = 0; //скидання лічильника неправильних спроб у випадку програшу компьютера
+        computerLost = true;
       }
     } else {
       //якщо введене місто не вірне
+      console.log("Місто не знайдено в масиві.");
+      outputElement.textContent = "Введене місто неправильне!";
       wrongAttempts++; //збільшення кількості неправильних спроб
-    }
 
-    userCityInput.value = ""; //очищення поля вводу
-    userCityInput.focus(); //перенаправлення фокусу для введення наступного міста
-    checkGameOver(); //перевірка на завершення гри після кожного шагу
+      if (wrongAttempts >= 3) {
+        //перевіряємо, чи кількість неправильних спроб більше або дорівнює 3
+        console.log("Користувач ввів тричі неправильно. Компьютер виграв!");
+        outputElement.textContent =
+          "Ви тричі ввели неправильне місто. Програли.";
+        wrongAttempts = 0;
+        computerLost = false;
+      }
+    }
+  } else {
+    outputElement.textContent = "Введене місто неправильне!";
+    wrongAttempts++;
   }
+
+  userCityInput.value = ""; //очищення поля вводу
+  userCityInput.focus(); //перенаправлення фокусу для введення наступного міста
+
+  checkGameOver(); //перевірка на завершення гри після кожного шагу
 }
 
 function getNextCity(lastletter) {
@@ -85,15 +97,25 @@ function checkGameOver() {
   //завершення гри - вивід результатів, функція означає чи виграв користувач або програв і виводь повідомлення
   var outputElement = document.getElementById("output");
 
-  if (wrongAttempts >= 3 || cities.length == 0) {
-    //перевіряємо чи кількість неправильних спроб більше або дорівнює 3 або ж чи кількість міст у масиві cities дорівнює 0, гра закінчується, якщо будь-яка з цих умов виконується
+  if (wrongAttempts >= 3 || cities.length == 0 || computerLost) {
+    //перевіряємо чи кількість неправильних спроб більше або дорівнює 3 або ж чи кількість міст у масиві cities дорівнює 0 або ж перевіряє, чи вже програв комп'ютер, гра закінчується, якщо будь-яка з цих умов виконується
     console.log(
       "Гра закінчена: кількість неправильних спроб " +
         wrongAttempts +
         " або міста закінчились: " +
         cities.length
     );
-    outputElement.textContent = "Я програв! Вітаю з перемогою!";
+    outputElement.textContent = "Ви виграли!Гра закінчена!";
+
+    //очистити ігрове поле
+    cities = []; //всі міста видаляються з масиву, оскільки гра закінчилась
+    wrongAttempts = 0; //лічильник неправильних спроб скидається до 0, оскільки гра завершилась і починається нова гра
+    computerLost = false; //змінна встановлюється в false, оскільки гра закінчилась і комп'ютер не програв
+
+    //блокуємо введення користувача
+    var userCityInput = document.getElementById("cityInput");
+    userCityInput.disabled = true;
+
     return; //оператор припиняє виконання функції, оскільки гра закінчилась
   } else {
     //якщо жодна з умов не виконується - гра продовжується
