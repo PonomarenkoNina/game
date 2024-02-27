@@ -9,6 +9,15 @@ function playGame() {
   var userCityInput = document.getElementById("cityInput"); //звертаємось через об'єкт до елементу cityInput - користувач вводить місто в інпут
   var outputElement = document.getElementById("output"); //output - виводить текстові повідомлення
   var userCity = userCityInput.value.trim().toUpperCase(); //userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли, переводить текст у верхній  регістр
+  var textPattern = /^[а-яґєіїА-ЯҐЄІЇa-zA-Z\s]+$/; //pегулярний вираз для перевірки, чи містить рядок лише букви та пробіли
+
+  if (!userCity || !textPattern.test(userCity)) {
+    // Якщо рядок порожній або не відповідає вимогам, виводимо повідомлення та завершуємо функцію
+    console.log("Введено неправильне значення.");
+    outputElement.textContent =
+      "Введено неправильне значення, яке не відповідає умовам гри! Будь ласка, введіть назву міста!";
+    return;
+  }
 
   if (userCity.length === 0) {
     //перевірка, чи введено щось користувачем
