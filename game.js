@@ -49,7 +49,8 @@ function playGame() {
     } else {
       //якщо місто не знайдено в масиві
       console.log("Місто не знайдено в масиві.");
-      outputElement.textContent = "Введеного міста немає у списку!";
+      outputElement.textContent =
+        "Ви ввели місто не з останньої літери попереднього міста!Сробуй ще раз!";
       wrongAttempts++; //збільшення кількості неправильних спроб
 
       if (wrongAttempts >= 3) {
