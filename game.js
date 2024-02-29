@@ -3,6 +3,7 @@ console.log(cities);
 var wrongAttempts = 0; //змінна для підрахунку помилок
 console.log(wrongAttempts);
 var computerLost = false; //вказує на те, чи програв комп'ютер
+var lastCity = null; //останнє місто, яке назвала програма
 
 function playGame() {
   //початок гри (виклик функції та отримання міста, яке ввів користувач, запам'ятовує назву міста і на яку літеру закінчується, знаходить останню літеру зі строки)
@@ -16,9 +17,10 @@ function playGame() {
     outputElement.textContent = "Ви не ввели місто!";
     return;
   }
-
-  if (/^[А-ЯЁІЇЄҐґA-Za-z]/.test(userCity)) {
-    //регулярний вираз перевіряє, чи починається рядок userCity з будь-якої літери кирилиці або латиниці (включаючи регістр)
+  //перевіряємо, чи введене користувачем місто відповідає правилам гри:
+  //якщо останнє місто, яке назвала програма, ще не було встановлене (null), або введене користувачем місто починається на останню літеру останнього названого міста, гра може продовжуватися
+  if (lastCity === null || userCity.startsWith(lastCity[lastCity.length - 1])) {
+    //якщо умова виконується, виводимо в консоль введене користувачем місто
     console.log("Введене користувачем місто: ", userCity);
     var i = cities.findIndex((city) => city.toUpperCase() === userCity);
     //шукає індекс міста у масиві cities, яке точно відповідає userCity, ігноруючи регістр. Функція findIndex шукає елемент у масиві, для якого функція зворотного виклику повертає true
@@ -45,9 +47,9 @@ function playGame() {
         computerLost = true;
       }
     } else {
-      //якщо введене місто не вірне
+      //якщо місто не знайдено в масиві
       console.log("Місто не знайдено в масиві.");
-      outputElement.textContent = "Введене місто неправильне!";
+      outputElement.textContent = "Введеного міста немає у списку!";
       wrongAttempts++; //збільшення кількості неправильних спроб
 
       if (wrongAttempts >= 3) {
@@ -60,7 +62,9 @@ function playGame() {
       }
     }
   } else {
-    outputElement.textContent = "Введене місто неправильне!";
+    console.log("Ви ввели місто не з останньої літери попереднього міста.");
+    outputElement.textContent =
+      "Ви ввели місто не з останньої літери попереднього міста!";
     wrongAttempts++;
   }
 
@@ -115,8 +119,6 @@ function checkGameOver() {
     //блокуємо введення користувача
     var userCityInput = document.getElementById("cityInput");
     userCityInput.disabled = true;
-
-    return; //оператор припиняє виконання функції, оскільки гра закінчилась
   } else {
     //якщо жодна з умов не виконується - гра продовжується
     console.log(
