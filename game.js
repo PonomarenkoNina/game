@@ -11,11 +11,7 @@ function playGame() {
   var outputElement = document.getElementById("output"); //output - виводить текстові повідомлення
   var userCity = userCityInput.value.trim().toUpperCase(); //userCityInput.value - повертає назву, введену користувачем і trim - видаляє пробіли, переводить текст у верхній  регістр
 
-  if (userCity.length === 0 && lastCity === null) {
-    outputElement.textContent = "Перше місто: " + cities[0]; // Початкове місто, яке програма вводить
-    lastCity = cities[0]; // Запам'ятовуємо останнє місто
-    return;
-  } else if (userCity.length === 0) {
+  if (userCity.length === 0) {
     //перевірка, чи введено щось користувачем
     console.log("Користувач не ввів місто.");
     outputElement.textContent = "Ви не ввели місто!";
@@ -88,7 +84,10 @@ function getNextCity(lastletter) {
       "Перевірка міста: " + city + " перевірка на літеру " + lastletter
     );
     //перевіряє чи перша літера імені міста співпадає з переданою літерою і перевіряє чи місто не було використане
-    if (city.charAt(0).toUpperCase() == lastletter) {
+    if (
+      city.charAt(0).toUpperCase() == lastletter &&
+      cities.indexOf(city) !== -1
+    ) {
       //якщо так, то також вилучаємо його з масиву
       console.log("Знайдено місто, що починається з потрібної літери:", city);
       cities.splice(i, 1); //вилучення
